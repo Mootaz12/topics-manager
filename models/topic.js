@@ -1,14 +1,25 @@
-import mongoose, { Schema } from "mongoose";
-const topicSchema = new Schema(
-  {
-    title: {
-      type: String,
+import mongoose from "mongoose";
+
+let Topic;
+
+try {
+  Topic = mongoose.model("Topic");
+} catch {
+  const topicSchema = new mongoose.Schema(
+    {
+      title: {
+        type: String,
+        required: true,
+      },
+      description: {
+        type: String,
+        required: true,
+      },
     },
-    description: {
-      type: String,
-    },
-  },
-  { timestamps: true }
-);
-const Topic = mongoose.model("Topic") || mongoose.model("Topic", topicSchema);
+    { timestamps: true }
+  );
+
+  Topic = mongoose.model("Topic", topicSchema);
+}
+
 export default Topic;

@@ -1,12 +1,11 @@
-"use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { HiOutlineTrash } from "react-icons/hi";
 import axios from "axios";
 
 const RemoveBtn = ({ topicId }) => {
   const deleteTopic = async () => {
     try {
-      await axios.delete(`https://localhost:3000/api/topics?id=${topicId}`);
+      await axios.delete(`http://localhost:3000/api/topics?id=${topicId}`);
     } catch (error) {
       console.error("Error deleting topic:", error);
     }

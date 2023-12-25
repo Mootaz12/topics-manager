@@ -1,46 +1,50 @@
+"use client";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import RemoveBtn from "./RemoveBtn";
+import RemoveBtn from "./RemoveBtn.jsx";
 import { HiPencilAlt } from "react-icons/hi";
+import axios from "axios";
 
-const getTopics = async () => {
-  try {
-    const res = await fetch("http://localhost:3000/api/topics", {
-      cache: "no-store",
-    });
+const TopicList = () => {
+  const [topics, setTopics] = useState([]);
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch topics");
-    }
-
-    return res.json();
-  } catch (error) {
-    console.log("Error loading topics: ", error);
-  }
-};
-
-export default async function TopicsList() {
-  const { topics } = await getTopics();
+  useEffect(() => {
+    const fetchTopics = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/topics");
+        if (response.status === 200) {
+          setTopics(response.data.topics);
+        } else {
+          throw new Error("Failed to fetch topics");
+        }
+      } catch (error) {
+        console.error("Error fetching topics:", error);
+      }
+    };
+    fetchTopics();
+  }, []);
 
   return (
-    <>
-      {topics.map((t) => (
+    <div>
+      {topics.map((topic) => (
         <div
-          key={t._id}
-          className="p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start"
+          key={topic._id}
+          className="border rounded-lg p-4 mb-4 flex items-center justify-between"
         >
-          <div>
-            <h2 className="font-bold text-2xl">{t.title}</h2>
-            <div>{t.description}</div>
+          <div className="flex-1">
+            <h2 className="text-xl font-semibold mb-2">{topic.title}</h2>
+            <div className="text-gray-600">{topic.description}</div>
           </div>
-
-          <div className="flex gap-2">
-            <RemoveBtn id={t._id} />
-            <Link href={`/editTopic/${t._id}`}>
+          <div className="flex items-center space-x-4">
+            <RemoveBtn topicId={topic._id} />
+            <Link href="/editTopic">
               <HiPencilAlt size={24} />
             </Link>
           </div>
         </div>
       ))}
-    </>
+    </div>
   );
-}
+};
+
+export default TopicList;

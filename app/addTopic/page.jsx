@@ -2,15 +2,13 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-const api = axios;
-
 const Page = () => {
   const [topicData, setTopicData] = useState({ title: "", description: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post("http://localhost:3000/api/topics", {
+      await axios.post("http://localhost:3000/api/topics", {
         title: topicData.title,
         description: topicData.description,
       });
