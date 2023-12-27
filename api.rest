@@ -8,7 +8,7 @@ Content-Type: application/json
 ###
 GET http://localhost:3000/api/topics HTTP/1.1
 ###
-GET http://localhost:3000/api/topics?id=6583517842a19359dd54f97a HTTP/1.1
+GET http://localhost:3000/api/topics?id=6589c7d57e1ded7cf56a99a2 HTTP/1.1
 ###
 DELETE  http://localhost:3000/api/topics?id=658350a703865c28363d6cd8 HTTP/1.1
 ###

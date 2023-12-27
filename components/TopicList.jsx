@@ -23,7 +23,9 @@ const TopicList = () => {
     };
     fetchTopics();
   }, []);
-
+  const handleDelete = (deletedId) => {
+    setTopics(topics.filter((topic) => topic._id !== deletedId));
+  };
   return (
     <div>
       {topics.map((topic) => (
@@ -36,8 +38,8 @@ const TopicList = () => {
             <div className="text-gray-600">{topic.description}</div>
           </div>
           <div className="flex items-center space-x-4">
-            <RemoveBtn topicId={topic._id} />
-            <Link href="/editTopic">
+            <RemoveBtn topicId={topic._id} handleDelete={handleDelete} />
+            <Link href={`/editTopic/${topic._id}`}>
               <HiPencilAlt size={24} />
             </Link>
           </div>
